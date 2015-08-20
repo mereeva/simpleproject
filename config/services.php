@@ -35,4 +35,8 @@ return [
         'secret' => '',
     ],
 
+    'postmark' => [
+    'api_key' => 'df48c5b4-c92a-443c-b5dc-c5296a1e8239'
+    ],
+
 ];

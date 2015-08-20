@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use App\UserDetails;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -14,6 +15,12 @@ class LoginController extends Controller
      * @param  int  $id
      * @return Response
      */
+
+    public function index(){
+        return view('login.home');
+    }
+
+
     public function register(Request $request)
     {
         //Validation Check
@@ -34,6 +41,12 @@ class LoginController extends Controller
         $userdetails->max_rooms = $request->max_rooms;
         $userdetails->save();
 
+        Mail::send('emails.register', $userdetails->toArray(), function ($m) use($userdetails){
+            $m->to($userdetails->email, $userdetails->name)->subject('Registration Successful');
+        });
+
         return view('login.home');
+
     }
+
 }

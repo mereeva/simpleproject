@@ -126,7 +126,7 @@ return [
         Illuminate\Filesystem\FilesystemServiceProvider::class,
         Illuminate\Foundation\Providers\FoundationServiceProvider::class,
         Illuminate\Hashing\HashServiceProvider::class,
-        Illuminate\Mail\MailServiceProvider::class,
+        //Illuminate\Mail\MailServiceProvider::class,
         Illuminate\Pagination\PaginationServiceProvider::class,
         Illuminate\Pipeline\PipelineServiceProvider::class,
         Illuminate\Queue\QueueServiceProvider::class,
@@ -145,8 +145,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /* HtmlService Provider */
-
         Collective\Html\HtmlServiceProvider::class,
+
+        /* Adding mail service provider for using Postmark */
+        Snowfire\Mail\PostmarkServiceProvider::class,
 
     ],
 

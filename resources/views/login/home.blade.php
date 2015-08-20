@@ -2,6 +2,6 @@
 <head><title> Home Page </title></head>
 
 <body>
-Successful
+<h1> Welcome to the Home Page! </h1>
 </body>
 </html>
