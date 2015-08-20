@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('login.register');
 });
+
+Route::post('/register', 'LoginController@register');
