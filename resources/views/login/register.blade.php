@@ -20,12 +20,12 @@
 			background-color: #E0A8AD;
 		}
         #city{
-            width: 18%;
+            width: 13%;
         }
 	</style>
 </head>
 <body>
-Please Register 
+<h1> Registration Form </h1>
 
 @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -36,6 +36,8 @@ Please Register
         </ul>
     </div>
 @endif
+
+<!-- echo print_r($city_data); -->
 
 
 {!! Form::open(array('url' => 'register')) !!}
@@ -48,8 +50,9 @@ Please Register
      <div class="form_text"> {!! Form::text('email') !!} </div>
     </div>
     <div class="form_element">  
+        <!-- array('Panjim' => 'Panjim', 'Mapusa' => 'Mapusa', 'Margao' => 'Margao' )  -->
      <div class="label"> {!! Form::label('city', 'City:') !!} </div>
-     <div class="form_text"> {!! Form::select('city', array('Panjim' => 'Panjim', 'Mapusa' => 'Mapusa', 'Margao' => 'Margao' ) ); !!} </div>
+    {!! Form::select('city', $cities) !!}
     </div>
     <div class="form_element">  
      <div class="label"> {!! Form::label('min_rent', 'Minimum Rent:') !!} </div>
@@ -63,7 +66,7 @@ Please Register
  	<div class="form_element"> 
  	{!! Form::submit('SUBMIT', array('class'=>'subBtn') ) !!}
  	</div>
-
+ {{!! Form::token() !!}}
 {!! Form::close() !!}
 </body>
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Mail;
+use App\Cities;
 use App\UserDetails;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,15 +17,31 @@ class LoginController extends Controller
      * @return Response
      */
 
-    public function index(){
-        return view('login.home');
+    public function index(Request $request){
+        if ($request->session()->has('user_id')) {
+            $session_user_id = session('user_id');
+            $user = UserDetails::find($session_user_id);
+            return view('login.home', ['user' => $user] );
+        }
+        else{
+            return view('login.failure');
+        }   
+        
     }
 
+    public function getRegister(){
+        $cities = cities::lists('name','id');
+        return view('login.register', ['cities' => $cities]);
+    }
 
     public function register(Request $request)
     {
+
+        if ($request->session()->has('user_id')) {
+            //
+        }
         //Validation Check
-         $this->validate($request, [
+        $this->validate($request, [
         'name' => 'required',    
         'email' => 'required|email|unique:user_details|max:255',
         'city' => 'required',
@@ -41,12 +58,30 @@ class LoginController extends Controller
         $userdetails->max_rooms = $request->max_rooms;
         $userdetails->save();
 
-        Mail::send('emails.register', $userdetails->toArray(), function ($m) use($userdetails){
-            $m->to($userdetails->email, $userdetails->name)->subject('Registration Successful');
-        });
+        //Saving SESSION data
+        $userdetails = UserDetails::find($userdetails->id);
+        session(['user_id' => $userdetails->id ]);
 
-        return view('login.home');
+        $session_user_id = session('user_id');
+
+        ////MAIL functionality
+        // Mail::send(['html' => 'emails.register', 'text'=>'emails.register1'], $userdetails->toArray(), function ($m) use($userdetails){
+        //     $m->to($userdetails->email, $userdetails->name)->subject('Registration Successful');
+        // });
+
+        $user = UserDetails::find($session_user_id);
+        return view('login.home', ['user' => $user] );
+
+
+
 
     }
+
+    public function logout(Request $request){
+        $request->session()->flush();
+        $cities = cities::lists('name','id');
+        return view('login.register', ['cities' => $cities]);
+    }
+
 
 }

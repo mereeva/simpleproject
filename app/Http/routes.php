@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('login.register');
-});
+// Route::get('/', function () {
+//     return view('login.register');
+// });
+
+Route::get('/', 'LoginController@getRegister');
 
 Route::post('/register', 'LoginController@register');
 
 Route::get('/register', 'LoginController@index');
+
+Route::get('/logout', 'LoginController@logout');
+
+Route::get('/login', 'LoginController@getRegister');
